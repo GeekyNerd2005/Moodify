@@ -1,37 +1,31 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// src/pages/Callback.js
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 export default function Callback() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const code = query.get("code");
+    const code = new URLSearchParams(location.search).get("code");
+    if (!code) return;
 
-    if (!code) {
-      alert("No authorization code found");
-      return;
-    }
-
-    const exchangeCodeForToken = async () => {
+    async function exchangeCode() {
       try {
-        const res = await axios.post("/.netlify/functions/auth", { code });
-        const { access_token, refresh_token, expires_in } = res.data;
+        const res = await axios.post("/.netlify/functions/exchange", { code });
+        const { access_token } = res.data;
 
-        localStorage.setItem("access_token", access_token);
-        localStorage.setItem("refresh_token", refresh_token);
-        localStorage.setItem("expires_in", expires_in);
-
+        localStorage.setItem("spotify_access_token", access_token);
         navigate("/dashboard");
       } catch (err) {
-        console.error("Token exchange failed:", err);
-        alert("Something went wrong during login.");
+        console.error("Token exchange failed", err);
+        alert("Authentication failed.");
       }
-    };
+    }
 
-    exchangeCodeForToken();
-  }, [navigate]);
+    exchangeCode();
+  }, [location, navigate]);
 
-  return <div>Logging in...</div>;
+  return <p>Logging you in...</p>;
 }
