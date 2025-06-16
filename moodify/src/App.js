@@ -1,30 +1,17 @@
-import { useEffect, useState } from "react";
-import Login from "./Login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Callback from "./pages/Callback";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [token, setToken] = useState(null);
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      const params = new URLSearchParams(hash.substring(1));
-      const _token = params.get("access_token");
-      if (_token) {
-        setToken(_token);
-        localStorage.setItem("spotifyToken", _token);
-        window.location.hash = ""; // clear the token from URL
-      }
-    }
-  }, []);
-
   return (
-    <div>
-      {token ? (
-        <h2>🎧 Logged In! Token: {token.slice(0, 20)}...</h2>
-      ) : (
-        <Login />
-      )}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/callback" element={<Callback />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
