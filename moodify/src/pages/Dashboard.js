@@ -5,7 +5,7 @@ export default function Dashboard() {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("spotify_access_token");
 
     if (!token) {
       alert("No access token. Please log in.");
