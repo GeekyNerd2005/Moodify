@@ -1,6 +1,6 @@
 export default function Login() {
   const clientId = "aed7c132277c4daba86f50210d48a5a5";
-  const redirectUri = "https://moodifyinc.netlify.app/";
+const redirectUri = "https://moodifyinc.netlify.app/";
   const scopes = [
     "user-top-read",
     "playlist-modify-public",
@@ -9,7 +9,7 @@ export default function Login() {
 
   const handleLogin = () => {
     const scope = scopes.join("%20");
-    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token&show_dialog=true`;
+const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token&show_dialog=true`;
     window.location.href = authUrl;
   };
 
