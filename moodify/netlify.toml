@@ -1,8 +1,0 @@
-[build]
-  base = "moodify"
-  publish = "build"
-  command = "npm run build"
-
-[build.environment]
-  REACT_APP_SPOTIFY_CLIENT_ID = "aed7c132277c4daba86f50210d48a5a5"
-  REACT_APP_SPOTIFY_REDIRECT_URI = "https://moodifyinc.netlify.app/"
